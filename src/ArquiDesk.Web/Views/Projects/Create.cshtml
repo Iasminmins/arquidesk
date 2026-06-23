@@ -1,0 +1,43 @@
+@model ProjectDto
+@{
+    ViewData["Title"] = "Novo projeto";
+}
+
+<form asp-action="Create" method="post" class="form-panel">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="Name" class="form-label">Nome do projeto</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="ClientId" class="form-label">Cliente</label>
+            <select asp-for="ClientId" asp-items="ViewBag.Clients" class="form-select"></select>
+        </div>
+        <div class="col-12">
+            <label asp-for="Address" class="form-label">Endereço</label>
+            <input asp-for="Address" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="StartDate" class="form-label">Início</label>
+            <input asp-for="StartDate" type="date" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="ExpectedDeliveryDate" class="form-label">Entrega prevista</label>
+            <input asp-for="ExpectedDeliveryDate" type="date" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Status" class="form-label">Status</label>
+            <select asp-for="Status" asp-items="ViewBag.Statuses" class="form-select"></select>
+        </div>
+        <div class="col-12">
+            <label asp-for="ResponsibleUserId" class="form-label">Responsável</label>
+            <input asp-for="ResponsibleUserId" class="form-control" placeholder="Id do usuário responsável" />
+        </div>
+    </div>
+    <div class="form-actions">
+        <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+        <button class="btn btn-primary" type="submit">Salvar projeto</button>
+    </div>
+</form>

@@ -1,0 +1,58 @@
+@model IReadOnlyList<Lead>
+@{
+    ViewData["Title"] = "Leads";
+}
+
+<section class="metric-grid mb-4">
+    <article class="metric-card"><div class="metric-icon primary"><i class="bi bi-person-lines-fill"></i></div><div><span>Total de leads</span><strong>@Model.Count</strong></div></article>
+    <article class="metric-card success"><div class="metric-icon success"><i class="bi bi-check2-circle"></i></div><div><span>Interessados</span><strong>@Model.Count(x => x.Interested == true)</strong></div></article>
+    <article class="metric-card"><div class="metric-icon info"><i class="bi bi-send"></i></div><div><span>Projeto enviado</span><strong>@Model.Count(x => x.ProjectSent == true)</strong></div></article>
+    <article class="metric-card danger"><div class="metric-icon danger"><i class="bi bi-telephone-x"></i></div><div><span>Não atendem</span><strong>@Model.Count(x => x.Status == LeadStatus.NaoAtende)</strong></div></article>
+</section>
+
+<form method="get" class="filter-bar">
+    <input name="search" value="@ViewBag.Search" class="form-control" placeholder="Pesquisar nome, telefone ou observação" />
+    <select name="status" asp-items="ViewBag.Statuses" class="form-select">
+        <option value="">Todos os status</option>
+    </select>
+    <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
+    <a class="btn btn-primary" asp-action="Create"><i class="bi bi-plus-lg"></i> Novo lead</a>
+</form>
+
+<div class="table-panel">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Contato</th>
+                <th>Atendeu</th>
+                <th>Interesse</th>
+                <th>Projeto</th>
+                <th>Status</th>
+                <th>Próximo contato</th>
+                <th>Observações</th>
+                <th class="text-end">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var lead in Model)
+        {
+            <tr>
+                <td class="fw-semibold">@lead.Name</td>
+                <td>@lead.Contact</td>
+                <td>@(lead.Answered == true ? "Sim" : lead.Answered == false ? "Não" : "-")</td>
+                <td>@(lead.Interested == true ? "Sim" : lead.Interested == false ? "Não" : "-")</td>
+                <td>@(lead.ProjectSent == true ? "Sim" : lead.ProjectSent == false ? "Não" : "-")</td>
+                <td><span class="badge text-bg-light">@lead.Status.GetDisplayName()</span></td>
+                <td>@(lead.NextFollowUpAt?.ToString("dd/MM/yyyy") ?? "-")</td>
+                <td>@lead.Observations</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@lead.Id" title="Editar lead">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

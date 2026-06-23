@@ -1,0 +1,96 @@
+@model ReportsViewModel
+@{
+    ViewData["Title"] = "Relatórios";
+}
+
+<section class="metric-grid mb-4">
+    <article class="metric-card">
+        <div class="metric-icon primary"><i class="bi bi-ticket-detailed"></i></div>
+        <div>
+            <span>Total de chamados</span>
+            <strong>@Model.TotalTickets</strong>
+        </div>
+    </article>
+    <article class="metric-card danger">
+        <div class="metric-icon danger"><i class="bi bi-clock-history"></i></div>
+        <div>
+            <span>Chamados vencidos</span>
+            <strong>@Model.OverdueTickets</strong>
+        </div>
+    </article>
+    <article class="metric-card">
+        <div class="metric-icon info"><i class="bi bi-kanban"></i></div>
+        <div>
+            <span>Projetos ativos</span>
+            <strong>@Model.ActiveProjects</strong>
+        </div>
+    </article>
+    <article class="metric-card success">
+        <div class="metric-icon success"><i class="bi bi-person-lines-fill"></i></div>
+        <div>
+            <span>Leads</span>
+            <strong>@Model.TotalLeads</strong>
+        </div>
+    </article>
+</section>
+
+<div class="toolbar">
+    <a class="btn btn-primary" asp-action="TicketsCsv"><i class="bi bi-download"></i> Exportar chamados CSV</a>
+</div>
+
+<section class="dashboard-grid mb-4">
+    <div class="panel">
+        <div class="panel-title">
+            <span>Chamados por status</span>
+            <small>Resumo operacional</small>
+        </div>
+        <div class="report-list">
+            @foreach (var item in Model.TicketsByStatus)
+            {
+                <div><span>@item.Key</span><strong>@item.Value</strong></div>
+            }
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-title">
+            <span>Chamados por prioridade</span>
+            <small>Criticidade</small>
+        </div>
+        <div class="report-list">
+            @foreach (var item in Model.TicketsByPriority)
+            {
+                <div><span>@item.Key</span><strong>@item.Value</strong></div>
+            }
+        </div>
+    </div>
+</section>
+
+<div class="table-panel">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Projeto</th>
+                <th>Tipo</th>
+                <th>Prioridade</th>
+                <th>Status</th>
+                <th>Abertura</th>
+                <th>SLA</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var ticket in Model.RecentTickets)
+        {
+            <tr>
+                <td class="fw-semibold">#@ticket.Number</td>
+                <td>@ticket.Project</td>
+                <td>@ticket.Type</td>
+                <td>@ticket.Priority</td>
+                <td><span class="badge text-bg-light">@ticket.Status</span></td>
+                <td>@ticket.OpenedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@ticket.SlaDueAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

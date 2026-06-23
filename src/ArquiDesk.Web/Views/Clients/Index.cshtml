@@ -1,0 +1,34 @@
+@model IReadOnlyList<ClientDto>
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="toolbar">
+    <a class="btn btn-primary" asp-action="Create"><i class="bi bi-plus-lg"></i> Novo cliente</a>
+</div>
+
+<div class="table-panel">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Documento</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Endereço</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var client in Model)
+        {
+            <tr>
+                <td class="fw-semibold">@client.Name</td>
+                <td>@client.Document</td>
+                <td>@client.Email</td>
+                <td>@client.Phone</td>
+                <td>@client.Address</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

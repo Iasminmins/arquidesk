@@ -1,0 +1,70 @@
+@model IReadOnlyList<UserListItemViewModel>
+@{
+    ViewData["Title"] = "Usuários";
+}
+
+<section class="metric-grid mb-4">
+    <article class="metric-card">
+        <div class="metric-icon primary"><i class="bi bi-people"></i></div>
+        <div>
+            <span>Total de usuários</span>
+            <strong>@Model.Count</strong>
+        </div>
+    </article>
+    <article class="metric-card success">
+        <div class="metric-icon success"><i class="bi bi-person-check"></i></div>
+        <div>
+            <span>Usuários ativos</span>
+            <strong>@Model.Count(x => x.Active)</strong>
+        </div>
+    </article>
+    <article class="metric-card">
+        <div class="metric-icon info"><i class="bi bi-shield-lock"></i></div>
+        <div>
+            <span>Administradores</span>
+            <strong>@Model.Count(x => x.Roles.Contains(UserRoles.Administrador))</strong>
+        </div>
+    </article>
+    <article class="metric-card danger">
+        <div class="metric-icon danger"><i class="bi bi-person-dash"></i></div>
+        <div>
+            <span>Inativos</span>
+            <strong>@Model.Count(x => !x.Active)</strong>
+        </div>
+    </article>
+</section>
+
+<div class="table-panel">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Email</th>
+                <th>Departamento</th>
+                <th>Perfis</th>
+                <th>Status</th>
+                <th>Criado em</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td class="fw-semibold">@user.FullName</td>
+                <td>@user.Email</td>
+                <td>@(user.Department ?? "-")</td>
+                <td>
+                    @foreach (var role in user.Roles)
+                    {
+                        <span class="badge text-bg-light me-1">@role</span>
+                    }
+                </td>
+                <td>
+                    <span class="badge @(user.Active ? "text-bg-success" : "text-bg-secondary")">@(user.Active ? "Ativo" : "Inativo")</span>
+                </td>
+                <td>@user.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

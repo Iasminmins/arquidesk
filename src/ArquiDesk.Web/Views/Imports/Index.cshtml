@@ -1,0 +1,59 @@
+@model ImportSpreadsheetViewModel
+@{
+    ViewData["Title"] = "Importar planilha";
+}
+
+<div class="form-panel">
+    <form asp-action="Index" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        <div class="row g-3 align-items-end">
+            <div class="col-lg-8">
+                <label asp-for="File" class="form-label">Planilha de controle</label>
+                <input asp-for="File" type="file" accept=".xlsx" class="form-control" />
+                <div class="form-text">Importa as abas LEADS, NEGOCIAÇÃO EM ABERTO, MONTAGEM e ASSISTENCIA.</div>
+            </div>
+            <div class="col-lg-4 d-grid">
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-upload"></i> Importar planilha
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@if (Model.Result is not null)
+{
+    <div class="metric-grid mt-4">
+        <div class="metric-card">
+            <div class="metric-icon"><i class="bi bi-person-lines-fill"></i></div>
+            <div><span>Leads importados</span><strong>@Model.Result.LeadsImported</strong></div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon"><i class="bi bi-cash-stack"></i></div>
+            <div><span>Negociações importadas</span><strong>@Model.Result.NegotiationsImported</strong></div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon"><i class="bi bi-tools"></i></div>
+            <div><span>Montagens importadas</span><strong>@Model.Result.InstallationsImported</strong></div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon"><i class="bi bi-life-preserver"></i></div>
+            <div><span>Assistências importadas</span><strong>@Model.Result.AssistanceImported</strong></div>
+        </div>
+    </div>
+
+    <div class="panel mt-4">
+        <div class="panel-title">
+            <span>Resultado da importação</span>
+            <small>@Model.Result.TotalImported registro(s) novo(s)</small>
+        </div>
+        <div class="report-list">
+            <div><span>Linhas ignoradas ou duplicadas</span><strong>@Model.Result.RowsIgnored</strong></div>
+            @foreach (var message in Model.Result.Messages)
+            {
+                <div><span>@message</span><strong><i class="bi bi-info-circle"></i></strong></div>
+            }
+        </div>
+    </div>
+}

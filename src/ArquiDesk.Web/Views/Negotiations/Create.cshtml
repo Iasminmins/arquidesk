@@ -1,0 +1,21 @@
+@model Negotiation
+@{
+    ViewData["Title"] = "Nova negociação";
+}
+
+<form asp-action="Create" method="post" class="form-panel">
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+    <div class="row g-3">
+        <div class="col-md-6"><label asp-for="ClientName" class="form-label">Cliente</label><input asp-for="ClientName" class="form-control" /></div>
+        <div class="col-md-6"><label asp-for="Contact" class="form-label">Contato</label><input asp-for="Contact" class="form-control" /></div>
+        <div class="col-md-3"><label asp-for="Cost" class="form-label">Custo</label><input asp-for="Cost" class="form-control" /></div>
+        <div class="col-md-3"><label asp-for="LastOfferedValue" class="form-label">Último valor passado</label><input asp-for="LastOfferedValue" class="form-control" /></div>
+        <div class="col-md-3"><label asp-for="CashValue" class="form-label">Valor à vista</label><input asp-for="CashValue" class="form-control" /></div>
+        <div class="col-md-3"><label asp-for="UpdatedValue" class="form-label">Valor atualizado</label><input asp-for="UpdatedValue" class="form-control" /></div>
+        <div class="col-md-4"><label asp-for="Status" class="form-label">Status</label><select asp-for="Status" asp-items="ViewBag.Statuses" class="form-select"></select></div>
+        <div class="col-md-4"><label asp-for="OwnerName" class="form-label">Responsável</label><input asp-for="OwnerName" class="form-control" /></div>
+        <div class="col-md-4"><label asp-for="NextContactAt" class="form-label">Próximo contato</label><input asp-for="NextContactAt" type="date" class="form-control" /></div>
+        <div class="col-12"><label asp-for="Notes" class="form-label">Observações</label><textarea asp-for="Notes" class="form-control" rows="4"></textarea></div>
+    </div>
+    <div class="form-actions"><a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a><button class="btn btn-primary" type="submit">Salvar negociação</button></div>
+</form>

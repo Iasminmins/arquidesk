@@ -1,0 +1,35 @@
+@model ClientDto
+@{
+    ViewData["Title"] = "Novo cliente";
+}
+
+<form asp-action="Create" method="post" class="form-panel">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="Name" class="form-label">Nome</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Document" class="form-label">Documento</label>
+            <input asp-for="Document" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Phone" class="form-label">Telefone</label>
+            <input asp-for="Phone" class="form-control" />
+        </div>
+        <div class="col-12">
+            <label asp-for="Address" class="form-label">Endereço</label>
+            <input asp-for="Address" class="form-control" />
+        </div>
+    </div>
+    <div class="form-actions">
+        <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+        <button class="btn btn-primary" type="submit">Salvar cliente</button>
+    </div>
+</form>

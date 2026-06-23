@@ -1,0 +1,20 @@
+@model Installation
+@{
+    ViewData["Title"] = "Editar montagem";
+}
+
+<form asp-action="Edit" method="post" class="form-panel">
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+    <div class="row g-3">
+        <div class="col-md-6"><label asp-for="ClientName" class="form-label">Cliente</label><input asp-for="ClientName" class="form-control" /></div>
+        <div class="col-md-6"><label asp-for="Contact" class="form-label">Contato</label><input asp-for="Contact" class="form-control" /></div>
+        <div class="col-md-4"><label asp-for="FactoryBillingDate" class="form-label">Data de faturamento da fábrica</label><input asp-for="FactoryBillingDate" type="date" class="form-control" /></div>
+        <div class="col-md-4"><label asp-for="OrderArrived" class="form-label">Pedido chegou?</label><select asp-for="OrderArrived" class="form-select"><option value="">Pendente</option><option value="true">Sim</option><option value="false">Não</option></select></div>
+        <div class="col-md-4"><label asp-for="InstallationDate" class="form-label">Data da montagem</label><input asp-for="InstallationDate" type="date" class="form-control" /></div>
+        <div class="col-md-6"><label asp-for="InstallerName" class="form-label">Montador</label><input asp-for="InstallerName" class="form-control" /></div>
+        <div class="col-md-6"><label asp-for="Status" class="form-label">Status</label><select asp-for="Status" asp-items="ViewBag.Statuses" class="form-select"></select></div>
+        <div class="col-12"><label asp-for="Notes" class="form-label">Observações</label><textarea asp-for="Notes" class="form-control" rows="4"></textarea></div>
+    </div>
+    <div class="form-actions"><a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a><button class="btn btn-primary" type="submit">Salvar alterações</button></div>
+</form>

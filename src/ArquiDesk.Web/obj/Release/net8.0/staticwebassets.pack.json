@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Projeto Port C#\\src\\ArquiDesk.Web\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Projeto Port C#\\src\\ArquiDesk.Web\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.ArquiDesk.Web.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.build.ArquiDesk.Web.props",
+      "PackagePath": "build\\ArquiDesk.Web.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.ArquiDesk.Web.props",
+      "PackagePath": "buildMultiTargeting\\ArquiDesk.Web.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildTransitive.ArquiDesk.Web.props",
+      "PackagePath": "buildTransitive\\ArquiDesk.Web.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

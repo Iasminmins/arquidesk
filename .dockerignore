@@ -1,0 +1,8 @@
+**/bin/
+**/obj/
+.git/
+.vs/
+.vscode/
+.build-verify/
+.publish-verify/
+src/ArquiDesk.Web/wwwroot/uploads/

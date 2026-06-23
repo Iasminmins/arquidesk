@@ -1,0 +1,39 @@
+@model IReadOnlyList<AssistanceRequest>
+@{
+    ViewData["Title"] = "Assistências";
+}
+
+<section class="metric-grid mb-4">
+    <article class="metric-card"><div class="metric-icon primary"><i class="bi bi-life-preserver"></i></div><div><span>Assistências</span><strong>@Model.Count</strong></div></article>
+    <article class="metric-card success"><div class="metric-icon success"><i class="bi bi-check2-circle"></i></div><div><span>Visita feita</span><strong>@Model.Count(x => x.VisitCompleted == true)</strong></div></article>
+    <article class="metric-card"><div class="metric-icon info"><i class="bi bi-cart-check"></i></div><div><span>Pedido efetuado</span><strong>@Model.Count(x => x.OrderPlaced == true)</strong></div></article>
+    <article class="metric-card danger"><div class="metric-icon danger"><i class="bi bi-exclamation-triangle"></i></div><div><span>Abertas</span><strong>@Model.Count(x => x.Status != AssistanceStatus.Concluida && x.Status != AssistanceStatus.Cancelada)</strong></div></article>
+</section>
+
+<div class="toolbar"><a class="btn btn-primary" asp-action="Create"><i class="bi bi-plus-lg"></i> Nova assistência</a></div>
+
+<div class="table-panel">
+    <table class="table align-middle">
+        <thead><tr><th>Cliente</th><th>Contato</th><th>Visita feita</th><th>Concluído</th><th>Pedido efetuado</th><th>Data assistência</th><th>Status</th><th>Observações</th><th class="text-end">Ações</th></tr></thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="fw-semibold">@item.ClientName</td>
+                <td>@item.Contact</td>
+                <td>@(item.VisitCompleted == true ? "Sim" : item.VisitCompleted == false ? "Não" : "-")</td>
+                <td>@(item.Completed == true ? "Sim" : item.Completed == false ? "Não" : "-")</td>
+                <td>@(item.OrderPlaced == true ? "Sim" : item.OrderPlaced == false ? "Não" : "-")</td>
+                <td>@(item.AssistanceDate?.ToString("dd/MM/yyyy") ?? "-")</td>
+                <td><span class="badge text-bg-light">@item.Status.GetDisplayName()</span></td>
+                <td>@item.Notes</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id" title="Editar assistência">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,34 @@
+@model IReadOnlyList<ProjectDto>
+@{
+    ViewData["Title"] = "Projetos";
+}
+
+<div class="toolbar">
+    <a class="btn btn-primary" asp-action="Create"><i class="bi bi-plus-lg"></i> Novo projeto</a>
+</div>
+
+<div class="table-panel">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Projeto</th>
+                <th>Cliente</th>
+                <th>Status</th>
+                <th>Entrega prevista</th>
+                <th>Endereço</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var project in Model)
+        {
+            <tr>
+                <td class="fw-semibold">@project.Name</td>
+                <td>@project.ClientName</td>
+                <td><span class="badge text-bg-light">@project.Status.GetDisplayName()</span></td>
+                <td>@project.ExpectedDeliveryDate.ToShortDateString()</td>
+                <td>@project.Address</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

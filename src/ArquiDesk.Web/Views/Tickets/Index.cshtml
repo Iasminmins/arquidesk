@@ -1,0 +1,50 @@
+@model TicketFilterViewModel
+@{
+    ViewData["Title"] = "Chamados";
+}
+
+<form method="get" class="filter-bar">
+    <input asp-for="Search" class="form-control" placeholder="Pesquisar por numero ou descricao" />
+    <select asp-for="Status" asp-items="Html.GetEnumSelectList<TicketStatus>()" class="form-select">
+        <option value="">Status</option>
+    </select>
+    <select asp-for="Priority" asp-items="Html.GetEnumSelectList<TicketPriority>()" class="form-select">
+        <option value="">Prioridade</option>
+    </select>
+    <select asp-for="Type" asp-items="Html.GetEnumSelectList<TicketType>()" class="form-select">
+        <option value="">Tipo</option>
+    </select>
+    <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
+</form>
+
+<div class="table-panel">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Projeto</th>
+                <th>Tipo</th>
+                <th>Prioridade</th>
+                <th>Status</th>
+                <th>SLA</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var ticket in Model.Items)
+        {
+            <tr class="@(ticket.IsOverdue ? "overdue-row" : "")">
+                <td class="fw-semibold">#@ticket.Number</td>
+                <td>@ticket.ProjectName</td>
+                <td>@ticket.Type.GetDisplayName()</td>
+                <td><span class="priority priority-@ticket.Priority.ToString().ToLowerInvariant()">@ticket.Priority.GetDisplayName()</span></td>
+                <td><span class="badge text-bg-light">@ticket.Status.GetDisplayName()</span></td>
+                <td>@ticket.SlaDueAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-primary" asp-action="Details" asp-route-id="@ticket.Id"><i class="bi bi-eye"></i></a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

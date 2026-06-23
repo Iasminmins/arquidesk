@@ -1,0 +1,35 @@
+@model TicketDto
+@{
+    ViewData["Title"] = "Novo chamado";
+}
+
+<form asp-action="Create" method="post" class="form-panel">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="ProjectId" class="form-label">Projeto</label>
+            <select asp-for="ProjectId" asp-items="ViewBag.Projects" class="form-select"></select>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="Type" class="form-label">Tipo</label>
+            <select asp-for="Type" asp-items="ViewBag.Types" class="form-select"></select>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="Priority" class="form-label">Prioridade</label>
+            <select asp-for="Priority" asp-items="ViewBag.Priorities" class="form-select"></select>
+        </div>
+        <div class="col-12">
+            <label asp-for="Description" class="form-label">Descrição</label>
+            <textarea asp-for="Description" rows="7" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="ResponsibleUserId" class="form-label">Responsável</label>
+            <input asp-for="ResponsibleUserId" class="form-control" placeholder="Id do usuário responsável" />
+        </div>
+    </div>
+    <div class="form-actions">
+        <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+        <button class="btn btn-primary" type="submit">Abrir chamado</button>
+    </div>
+</form>

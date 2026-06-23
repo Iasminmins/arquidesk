@@ -1,0 +1,87 @@
+@model DashboardDto
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<section class="metric-grid">
+    <article class="metric-card">
+        <div class="metric-icon primary"><i class="bi bi-ticket-detailed"></i></div>
+        <div>
+            <span>Chamados abertos</span>
+            <strong>@Model.OpenTickets</strong>
+        </div>
+    </article>
+    <article class="metric-card danger">
+        <div class="metric-icon danger"><i class="bi bi-exclamation-triangle"></i></div>
+        <div>
+            <span>Chamados vencidos</span>
+            <strong>@Model.OverdueTickets</strong>
+        </div>
+    </article>
+    <article class="metric-card">
+        <div class="metric-icon info"><i class="bi bi-kanban"></i></div>
+        <div>
+            <span>Projetos ativos</span>
+            <strong>@Model.ActiveProjects</strong>
+        </div>
+    </article>
+    <article class="metric-card success">
+        <div class="metric-icon success"><i class="bi bi-check2-circle"></i></div>
+        <div>
+            <span>Projetos entregues</span>
+            <strong>@Model.DeliveredProjects</strong>
+        </div>
+    </article>
+</section>
+
+<section class="dashboard-grid mt-4">
+    <div class="panel chart-panel">
+        <div class="panel-title">
+            <span>Chamados por status</span>
+            <small>Distribuição atual</small>
+        </div>
+        <div class="chart-box chart-box-donut">
+            <canvas id="statusChart"></canvas>
+        </div>
+    </div>
+    <div class="panel chart-panel">
+        <div class="panel-title">
+            <span>Chamados por prioridade</span>
+            <small>Volume por criticidade</small>
+        </div>
+        <div class="chart-box">
+            <canvas id="priorityChart"></canvas>
+        </div>
+    </div>
+    <div class="panel chart-panel">
+        <div class="panel-title">
+            <span>Chamados por tipo</span>
+            <small>Demandas mais frequentes</small>
+        </div>
+        <div class="chart-box">
+            <canvas id="typeChart"></canvas>
+        </div>
+    </div>
+    <div class="panel sla-panel">
+        <div class="panel-title">
+            <span>SLA cumprido x vencido</span>
+            <small>Performance operacional</small>
+        </div>
+        <div class="sla-box">
+            <div><strong>@Model.SlaMet</strong><span>Cumpridos</span></div>
+            <div><strong>@Model.SlaOverdue</strong><span>Vencidos</span></div>
+            <div><strong>@(Model.AverageResolutionHours.ToString("N1"))h</strong><span>Tempo médio</span></div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        window.arquiDeskCharts = {
+            status: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TicketsByStatus)),
+            priority: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TicketsByPriority)),
+            type: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TicketsByType))
+        };
+        renderDashboardCharts(window.arquiDeskCharts);
+    </script>
+}

@@ -1,0 +1,41 @@
+@model IReadOnlyList<Negotiation>
+@{
+    ViewData["Title"] = "Negociações";
+    var totalAberto = Model.Where(x => x.Status != NegotiationStatus.Ganha && x.Status != NegotiationStatus.Perdida).Sum(x => x.UpdatedValue ?? x.CashValue ?? x.LastOfferedValue ?? 0);
+}
+
+<section class="metric-grid mb-4">
+    <article class="metric-card"><div class="metric-icon primary"><i class="bi bi-cash-stack"></i></div><div><span>Negociações</span><strong>@Model.Count</strong></div></article>
+    <article class="metric-card success"><div class="metric-icon success"><i class="bi bi-graph-up"></i></div><div><span>Valor em aberto</span><strong>@totalAberto.ToString("C0")</strong></div></article>
+    <article class="metric-card"><div class="metric-icon info"><i class="bi bi-calendar-event"></i></div><div><span>Com retorno</span><strong>@Model.Count(x => x.NextContactAt != null)</strong></div></article>
+    <article class="metric-card danger"><div class="metric-icon danger"><i class="bi bi-hourglass-split"></i></div><div><span>Aguardando</span><strong>@Model.Count(x => x.Status == NegotiationStatus.AguardandoRetorno)</strong></div></article>
+</section>
+
+<div class="toolbar"><a class="btn btn-primary" asp-action="Create"><i class="bi bi-plus-lg"></i> Nova negociação</a></div>
+
+<div class="table-panel">
+    <table class="table align-middle">
+        <thead><tr><th>Cliente</th><th>Contato</th><th>Custo</th><th>Último valor</th><th>À vista</th><th>Atualizado</th><th>Status</th><th>Próximo contato</th><th>Observações</th><th class="text-end">Ações</th></tr></thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="fw-semibold">@item.ClientName</td>
+                <td>@item.Contact</td>
+                <td>@(item.Cost?.ToString("C") ?? "-")</td>
+                <td>@(item.LastOfferedValue?.ToString("C") ?? "-")</td>
+                <td>@(item.CashValue?.ToString("C") ?? "-")</td>
+                <td>@(item.UpdatedValue?.ToString("C") ?? "-")</td>
+                <td><span class="badge text-bg-light">@item.Status.GetDisplayName()</span></td>
+                <td>@(item.NextContactAt?.ToString("dd/MM/yyyy") ?? "-")</td>
+                <td>@item.Notes</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id" title="Editar negociação">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

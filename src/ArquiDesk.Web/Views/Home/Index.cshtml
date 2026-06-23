@@ -1,0 +1,127 @@
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ArquiDesk - Help Desk para arquitetura e móveis planejados</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+</head>
+<body class="landing-page">
+    <header class="landing-nav">
+        <a class="landing-brand" asp-controller="Home" asp-action="Index">
+            <span class="brand-mark">A</span>
+            <span>ArquiDesk</span>
+        </a>
+        <nav>
+            <a href="#recursos">Recursos</a>
+            <a href="#fluxo">Fluxo</a>
+            <a href="#indicadores">Indicadores</a>
+            <a class="btn btn-outline-primary" asp-controller="Account" asp-action="Login">Entrar</a>
+            <a class="btn btn-primary" asp-controller="Account" asp-action="Register">Criar conta</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="landing-hero">
+            <div class="hero-copy">
+                <span class="hero-kicker">Help Desk para arquitetura, marcenarias e móveis planejados</span>
+                <h1>Controle solicitações, alterações e problemas de obra em um só lugar.</h1>
+                <p>
+                    O ArquiDesk organiza chamados entre clientes, arquitetos, projetistas, produção e instalação,
+                    com SLA, anexos, histórico e dashboard para acompanhar cada projeto sem perder prazos.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary btn-lg" asp-controller="Account" asp-action="Register">Criar primeira conta</a>
+                    <a class="btn btn-light btn-lg" asp-controller="Account" asp-action="Login">Entrar</a>
+                    <a class="btn btn-light btn-lg" href="#recursos">Ver recursos</a>
+                </div>
+            </div>
+            <div class="product-preview" aria-hidden="true">
+                <div class="preview-topbar">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="preview-body">
+                    <div class="preview-sidebar"></div>
+                    <div class="preview-content">
+                        <div class="preview-metrics">
+                            <div><strong>18</strong><span>Abertos</span></div>
+                            <div><strong>3</strong><span>Vencidos</span></div>
+                            <div><strong>42h</strong><span>Média</span></div>
+                        </div>
+                        <div class="preview-ticket">
+                            <span class="priority priority-urgente">Urgente</span>
+                            <strong>Erro de medida na instalação</strong>
+                            <p>Fotos, planta baixa e comentários reunidos no chamado.</p>
+                        </div>
+                        <div class="preview-bars">
+                            <span style="width: 88%"></span>
+                            <span style="width: 62%"></span>
+                            <span style="width: 44%"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="recursos" class="landing-section">
+            <div class="section-heading">
+                <span>Recursos principais</span>
+                <h2>Feito para o fluxo real de projetos sob medida.</h2>
+            </div>
+            <div class="feature-grid">
+                <article>
+                    <i class="bi bi-ticket-detailed"></i>
+                    <h3>Chamados com SLA</h3>
+                    <p>Prioridade, tipo de solicitação, responsável, prazo e status em um fluxo claro.</p>
+                </article>
+                <article>
+                    <i class="bi bi-person-lines-fill"></i>
+                    <h3>Leads e follow-up</h3>
+                    <p>Controle atendimento, interesse, envio de projeto, próximo contato e observações comerciais.</p>
+                </article>
+                <article>
+                    <i class="bi bi-cash-stack"></i>
+                    <h3>Negociações</h3>
+                    <p>Acompanhe custo, valores passados, valor à vista, status e retorno de cada oportunidade.</p>
+                </article>
+                <article>
+                    <i class="bi bi-tools"></i>
+                    <h3>Montagem e assistência</h3>
+                    <p>Organize pedido da fábrica, data de montagem, visita técnica, pedido efetuado e conclusão.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="fluxo" class="landing-band">
+            <div>
+                <span>Fluxo corporativo</span>
+                <h2>Do orçamento ao pós-venda, todo mundo acompanha o mesmo histórico.</h2>
+            </div>
+            <div class="flow-steps">
+                <div><strong>1</strong><span>Cliente abre solicitação</span></div>
+                <div><strong>2</strong><span>Equipe analisa e define responsável</span></div>
+                <div><strong>3</strong><span>Projeto, produção ou instalação atualiza status</span></div>
+                <div><strong>4</strong><span>Gestão acompanha SLA e indicadores</span></div>
+            </div>
+        </section>
+
+        <section id="indicadores" class="landing-section compact">
+            <div class="section-heading">
+                <span>Para impressionar recrutadores</span>
+                <h2>Não é só cadastro: tem regra de negócio, segurança e visão gerencial.</h2>
+            </div>
+            <div class="proof-grid">
+                <div><strong>Identity</strong><span>Login, cadastro, roles e permissões</span></div>
+                <div><strong>EF Core</strong><span>Code First, migrations e relacionamentos</span></div>
+                <div><strong>Clean Architecture</strong><span>Domínio, aplicação, infraestrutura e MVC</span></div>
+                <div><strong>CRM operacional</strong><span>Leads, negociações, montagem e pós-venda</span></div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

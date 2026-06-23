@@ -1,0 +1,39 @@
+@model IReadOnlyList<Installation>
+@{
+    ViewData["Title"] = "Montagens";
+}
+
+<section class="metric-grid mb-4">
+    <article class="metric-card"><div class="metric-icon primary"><i class="bi bi-tools"></i></div><div><span>Montagens</span><strong>@Model.Count</strong></div></article>
+    <article class="metric-card success"><div class="metric-icon success"><i class="bi bi-box-seam"></i></div><div><span>Pedido chegou</span><strong>@Model.Count(x => x.OrderArrived == true)</strong></div></article>
+    <article class="metric-card"><div class="metric-icon info"><i class="bi bi-calendar-check"></i></div><div><span>Agendadas</span><strong>@Model.Count(x => x.InstallationDate != null)</strong></div></article>
+    <article class="metric-card danger"><div class="metric-icon danger"><i class="bi bi-arrow-repeat"></i></div><div><span>Reagendar</span><strong>@Model.Count(x => x.Status == InstallationStatus.Reagendar)</strong></div></article>
+</section>
+
+<div class="toolbar"><a class="btn btn-primary" asp-action="Create"><i class="bi bi-plus-lg"></i> Nova montagem</a></div>
+
+<div class="table-panel">
+    <table class="table align-middle">
+        <thead><tr><th>Cliente</th><th>Contato</th><th>Faturamento fábrica</th><th>Pedido chegou</th><th>Data montagem</th><th>Montador</th><th>Status</th><th>Observações</th><th class="text-end">Ações</th></tr></thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="fw-semibold">@item.ClientName</td>
+                <td>@item.Contact</td>
+                <td>@(item.FactoryBillingDate?.ToString("dd/MM/yyyy") ?? "-")</td>
+                <td>@(item.OrderArrived == true ? "Sim" : item.OrderArrived == false ? "Não" : "-")</td>
+                <td>@(item.InstallationDate?.ToString("dd/MM/yyyy") ?? "-")</td>
+                <td>@item.InstallerName</td>
+                <td><span class="badge text-bg-light">@item.Status.GetDisplayName()</span></td>
+                <td>@item.Notes</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id" title="Editar montagem">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
