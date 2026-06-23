@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArquiDesk.Web.Controllers;
 
-[Authorize(Roles = $"{UserRoles.Administrador},{UserRoles.Arquiteto},{UserRoles.Projetista}")]
+[Authorize(Roles = UserRoles.EquipeInterna)]
 public class ImportsController(SpreadsheetImportService importService) : Controller
 {
     public IActionResult Index()

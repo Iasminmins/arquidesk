@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ArquiDesk.Web.Controllers;
 
-[Authorize(Roles = $"{UserRoles.Administrador},{UserRoles.Arquiteto}")]
+[Authorize(Roles = UserRoles.EquipeInterna)]
 public class ProjectsController(IUnitOfWork unitOfWork, IMapper mapper) : Controller
 {
     public async Task<IActionResult> Index()

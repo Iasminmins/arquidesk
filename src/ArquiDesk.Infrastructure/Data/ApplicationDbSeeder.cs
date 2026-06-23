@@ -18,6 +18,8 @@ public class ApplicationDbSeeder(UserManager<ApplicationUser> userManager, RoleM
             }
         }
 
+        await MigrateOldExternalUsersToProjetistaAsync();
+
         var admin = await userManager.FindByEmailAsync("admin@arquidesk.com");
         if (admin == null)
         {
@@ -104,6 +106,37 @@ public class ApplicationDbSeeder(UserManager<ApplicationUser> userManager, RoleM
         {
             sampleTicket.Description = "Alterar medidas do armário da suíte conforme nova planta enviada.";
             await context.SaveChangesAsync();
+        }
+    }
+
+    private async Task MigrateOldExternalUsersToProjetistaAsync()
+    {
+        var oldRoles = new[] { UserRoles.Cliente, UserRoles.Instalador };
+
+        foreach (var oldRole in oldRoles)
+        {
+            if (!await roleManager.RoleExistsAsync(oldRole))
+            {
+                continue;
+            }
+
+            var users = await userManager.GetUsersInRoleAsync(oldRole);
+
+            foreach (var user in users)
+            {
+                await userManager.RemoveFromRoleAsync(user, oldRole);
+
+                if (!await userManager.IsInRoleAsync(user, UserRoles.Projetista))
+                {
+                    await userManager.AddToRoleAsync(user, UserRoles.Projetista);
+                }
+
+                if (user.Department == oldRole)
+                {
+                    user.Department = UserRoles.Projetista;
+                    await userManager.UpdateAsync(user);
+                }
+            }
         }
     }
 }

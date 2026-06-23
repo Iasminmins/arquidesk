@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ArquiDesk.Web.Controllers;
 
-[Authorize(Roles = UserRoles.Administrador)]
+[Authorize(Roles = UserRoles.EquipeInterna)]
 public class UsersController(UserManager<ApplicationUser> userManager) : Controller
 {
     public async Task<IActionResult> Index()

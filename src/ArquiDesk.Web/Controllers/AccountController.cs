@@ -66,7 +66,7 @@ public class AccountController(
             Email = model.Email,
             EmailConfirmed = true,
             FullName = model.FullName,
-            Department = "Cliente"
+            Department = UserRoles.Projetista
         };
 
         var result = await userManager.CreateAsync(user, model.Password);
@@ -80,7 +80,7 @@ public class AccountController(
             return View(model);
         }
 
-        await userManager.AddToRoleAsync(user, UserRoles.Cliente);
+        await userManager.AddToRoleAsync(user, UserRoles.Projetista);
         await signInManager.SignInAsync(user, isPersistent: false);
 
         return LocalRedirect(Url.IsLocalUrl(returnUrl) ? returnUrl : Url.Action("Index", "Dashboard")!);
