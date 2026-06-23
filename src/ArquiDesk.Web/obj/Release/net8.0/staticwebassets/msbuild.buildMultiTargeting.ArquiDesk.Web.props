@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\ArquiDesk.Web.props" />
-</Project>
