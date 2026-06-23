@@ -11,7 +11,7 @@ public class ArquiDeskProfile : Profile
         CreateMap<Client, ClientDto>().ReverseMap();
 
         CreateMap<Project, ProjectDto>()
-            .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Lead != null ? src.Lead.Name : string.Empty))
+            .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client != null ? src.Client.Name : string.Empty))
             .ReverseMap();
 
         CreateMap<Ticket, TicketDto>()

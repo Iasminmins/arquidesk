@@ -2,6 +2,7 @@ using ArquiDesk.Domain.Entities;
 using ArquiDesk.Domain.Enums;
 using ArquiDesk.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArquiDesk.Infrastructure.Data;
 
@@ -33,7 +34,25 @@ public class ApplicationDbSeeder(UserManager<ApplicationUser> userManager, RoleM
             await userManager.AddToRoleAsync(admin, UserRoles.Administrador);
         }
 
-        if (!context.Leads.Any())
+        var sampleClient = await context.Clients
+            .OrderBy(x => x.CreatedAt)
+            .FirstOrDefaultAsync();
+
+        if (sampleClient == null)
+        {
+            sampleClient = new Client
+            {
+                Name = "Cliente Demonstracao",
+                Document = "000.000.000-00",
+                Email = "cliente@demo.com",
+                Phone = "(11) 99999-0000",
+                Address = "Rua dos Projetos, 100"
+            };
+
+            await context.Clients.AddAsync(sampleClient);
+        }
+
+        if (!await context.Leads.AnyAsync())
         {
             var lead = new Lead
             {
@@ -46,10 +65,15 @@ public class ApplicationDbSeeder(UserManager<ApplicationUser> userManager, RoleM
                 Observations = "Lead inicial de demonstracao"
             };
 
+            await context.Leads.AddAsync(lead);
+        }
+
+        if (!await context.Projects.AnyAsync())
+        {
             var project = new Project
             {
                 Name = "Apartamento Jardim",
-                Lead = lead,
+                Client = sampleClient,
                 Address = "Rua dos Projetos, 100",
                 StartDate = DateTime.Today.AddDays(-12),
                 ExpectedDeliveryDate = DateTime.Today.AddDays(30),
@@ -57,8 +81,8 @@ public class ApplicationDbSeeder(UserManager<ApplicationUser> userManager, RoleM
                 Status = ProjectStatus.EmProjeto
             };
 
-            context.Projects.Add(project);
-            context.Tickets.Add(new Ticket
+            await context.Projects.AddAsync(project);
+            await context.Tickets.AddAsync(new Ticket
             {
                 Number = 1,
                 Project = project,
@@ -71,11 +95,11 @@ public class ApplicationDbSeeder(UserManager<ApplicationUser> userManager, RoleM
                 SlaDueAt = DateTime.UtcNow.AddHours(64),
                 Status = TicketStatus.EmAnalise
             });
-
-            await context.SaveChangesAsync();
         }
 
-        var sampleTicket = context.Tickets.FirstOrDefault(x => x.Number == 1);
+        await context.SaveChangesAsync();
+
+        var sampleTicket = await context.Tickets.FirstOrDefaultAsync(x => x.Number == 1);
         if (sampleTicket != null && sampleTicket.Description.Contains("armario da suite"))
         {
             sampleTicket.Description = "Alterar medidas do armário da suíte conforme nova planta enviada.";

@@ -41,7 +41,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             entity.Property(x => x.Name).HasMaxLength(160).IsRequired();
             entity.Property(x => x.Address).HasMaxLength(240).IsRequired();
             entity.Property(x => x.ResponsibleUserId).HasMaxLength(450).IsRequired();
-            entity.HasOne(x => x.Lead).WithMany().HasForeignKey(x => x.ClientId);
+            entity.HasOne(x => x.Client).WithMany(x => x.Projects).HasForeignKey(x => x.ClientId);
         });
 
         builder.Entity<Room>(entity =>

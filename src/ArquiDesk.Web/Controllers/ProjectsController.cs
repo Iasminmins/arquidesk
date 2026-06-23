@@ -17,7 +17,7 @@ public class ProjectsController(IUnitOfWork unitOfWork, IMapper mapper) : Contro
     public async Task<IActionResult> Index()
     {
         var projects = await unitOfWork.Projects.Query()
-            .Include(x => x.Lead)
+            .Include(x => x.Client)
             .OrderByDescending(x => x.CreatedAt)
             .ToListAsync();
 
@@ -26,7 +26,7 @@ public class ProjectsController(IUnitOfWork unitOfWork, IMapper mapper) : Contro
 
     public async Task<IActionResult> Create()
     {
-        await FillLeadsAsync();
+        await FillClientsAsync();
         return View(new ProjectDto { StartDate = DateTime.Today, ExpectedDeliveryDate = DateTime.Today.AddDays(30) });
     }
 
@@ -35,7 +35,7 @@ public class ProjectsController(IUnitOfWork unitOfWork, IMapper mapper) : Contro
     {
         if (!ModelState.IsValid)
         {
-            await FillLeadsAsync();
+            await FillClientsAsync();
             return View(model);
         }
 
@@ -45,10 +45,10 @@ public class ProjectsController(IUnitOfWork unitOfWork, IMapper mapper) : Contro
         return RedirectToAction(nameof(Index));
     }
 
-    private async Task FillLeadsAsync()
+    private async Task FillClientsAsync()
     {
-        var leads = await unitOfWork.Leads.Query().OrderBy(x => x.Name).ToListAsync();
-        ViewBag.Clients = new SelectList(leads, "Id", "Name");
+        var clients = await unitOfWork.Clients.Query().OrderBy(x => x.Name).ToListAsync();
+        ViewBag.Clients = new SelectList(clients, "Id", "Name");
         ViewBag.Statuses = EnumSelectListHelper.ToSelectList<ProjectStatus>();
     }
 }
